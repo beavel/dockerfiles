@@ -1,5 +1,5 @@
 # docker build -t logitechmediaserver-build .
-#
+# docker run -it --rm -v <local-source-folder>:/usr/src/ logitechmediaserver-build
 
 FROM debian:jessie
 ENV OS_VERSION 6.6.1
@@ -11,23 +11,26 @@ RUN     apt-get update && apt-get upgrade -y && \
         apt-get install -y \
         apt-utils \
         build-essential \
+        git-buildpackage \
         dpkg-dev \
         debhelper \
         devscripts \
         perl \
         libgomp1 \
         lame \
+        ffmpeg \
+        readynasos \
         git
 
 
 ENV SLIMSERVER_VERSION public/7.9
 
-RUN git clone https://github.com/Logitech/slimserver.git /usr/src/slimserver && \
-    git clone https://github.com/NAStools/logitechmediaserver.git /usr/src/nastools-logitechmediaserver && \
-    (\
-        cd /usr/src/slimserver \
-        && git checkout "${SLIMSERVER_VERSION}" \
-    )
+# RUN git clone https://github.com/Logitech/slimserver.git /usr/src/slimserver && \
+#     git clone https://github.com/NAStools/logitechmediaserver.git /usr/src/nastools-logitechmediaserver && \
+#     (\
+#         cd /usr/src/slimserver \
+#         && git checkout "${SLIMSERVER_VERSION}" \
+#     )
 
 
 WORKDIR /usr/src/slimserver
